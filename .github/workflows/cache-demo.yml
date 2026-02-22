@@ -1,0 +1,23 @@
+name: Cache Demo
+
+on: [push]  # Triggers on any push to demo it
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: prime-cache-9c28f60  # Exact name required
+      uses: actions/cache@v4     # Latest version as specified
+      with:
+        key: cache-9c28f60       # Exact key required
+        path: ~/.npm             # Cache npm deps (common example)
+        
+    - name: Install dependencies  # This benefits from cache
+      run: npm ci                 # Or 'pip install -r requirements.txt' for Python
+      
+    - name: Run tests (optional)
+      run: npm test               # Or whatever your project needs
