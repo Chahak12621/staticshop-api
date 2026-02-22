@@ -1,0 +1,1 @@
+# staticshop-api
