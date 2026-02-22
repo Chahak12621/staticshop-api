@@ -1,19 +1,16 @@
-name: Hello Action with Email  # Overall workflow name (shows in GitHub UI)
+name: Hello Action
 
-on:  # Triggers: run on any push to main branch
+on:
   push:
     branches: [ main ]
 
-jobs:  # One job called "test"
+jobs:
   test:
-    runs-on: ubuntu-latest  # Free virtual machine (runner) like a cloud Ubuntu computer
-
-    steps:  # Sequence of tasks in this job
-      - name: Checkout code  # Step 1: Grab your repo files
-        uses: actions/checkout@v4  # Reusable "action" (like a pre-built tool)
-
-      - name: 24f1000451@ds.study.iitm.ac.in  # Step 2: Your required step (custom name with email)
-        run: echo "Hello from GitHub Actions! Email step complete."  # Simple command
-
-      - name: List files  # Step 3: Extra useful step (shows it works)
-        run: ls -la
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: 24f1000451@ds.study.iitm.ac.in
+        run: echo "Email step success!"
+      - name: Done
+        run: echo "Workflow complete."
