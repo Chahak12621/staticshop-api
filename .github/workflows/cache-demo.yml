@@ -1,23 +1,26 @@
-name: Cache Demo
+name: Caching Primes
 
-on: [push]  # Triggers on any push to demo it
+on: [push, workflow_dispatch]
 
 jobs:
-  demo:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: prime-cache-9c28f60  # Exact name required
-      uses: actions/cache@v4     # Latest version as specified
+    - uses: actions/checkout@v4
+
+    - name: Cache Primes
+      id: cache-primes
+      uses: actions/cache@v4
       with:
-        key: cache-9c28f60       # Exact key required
-        path: ~/.npm             # Cache npm deps (common example)
-        
-    - name: Install dependencies  # This benefits from cache
-      run: npm ci                 # Or 'pip install -r requirements.txt' for Python
-      
-    - name: Run tests (optional)
-      run: npm test               # Or whatever your project needs
+        path: prime-numbers
+        key: cache-9c28f60
+
+    - name: Generate Prime Numbers
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p prime-numbers
+        echo "2, 3, 5, 7, 11, 13, 17, 19, 23, 29" > prime-numbers/primes.txt
+
+    - name: prime-cache-9c28f60 
+      run: echo "Cache hit ${{ steps.cache-primes.outputs.cache-hit }}"
